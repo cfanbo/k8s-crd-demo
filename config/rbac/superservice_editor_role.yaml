@@ -1,0 +1,31 @@
+# permissions for end users to edit superservices.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: superservice-editor-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: demo
+    app.kubernetes.io/part-of: demo
+    app.kubernetes.io/managed-by: kustomize
+  name: superservice-editor-role
+rules:
+- apiGroups:
+  - tech.example.io
+  resources:
+  - superservices
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tech.example.io
+  resources:
+  - superservices/status
+  verbs:
+  - get

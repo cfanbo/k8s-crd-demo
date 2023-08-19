@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- tech_v1_superservice.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples

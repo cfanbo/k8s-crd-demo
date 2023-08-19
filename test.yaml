@@ -1,0 +1,16 @@
+apiVersion: tech.example.io/v1
+kind: SuperService
+metadata:
+  name: nginx-app
+spec:
+  size: 2
+  image: nginx:1.23-alpine
+  envs:
+    - name: yourname
+      value: sxf
+    - name: sex
+      value: man
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30002
