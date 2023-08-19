@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: tech.example.io/demo
-  newTag: v2
+  newTag: v3

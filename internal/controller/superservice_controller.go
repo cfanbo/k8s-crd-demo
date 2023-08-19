@@ -138,9 +138,9 @@ func (r *SuperServiceReconciler) Reconcile(ctx context.Context, req ctrl.Request
 	}
 
 	// oldSpec 数据库中存储的记录
-	oldSpec := techv1.SuperService{}
+	oldSpec := techv1.SuperServiceSpec{}
 	if value, ok := instance.Annotations["spec"]; ok && value != "" {
-		if err := json.Unmarshal([]byte(instance.Annotations["spec"]), &oldSpec); err != nil {
+		if err := json.Unmarshal([]byte(value), &oldSpec); err != nil {
 			llog.Error(err, "解析JSON失败："+instance.Annotations["spec"])
 			return ctrl.Result{}, err
 		}
@@ -152,7 +152,20 @@ func (r *SuperServiceReconciler) Reconcile(ctx context.Context, req ctrl.Request
 		if instance.Annotations == nil {
 			instance.Annotations = make(map[string]string)
 		}
-		jsonData, _ := json.Marshal(instance.Spec)
+		jsonData, err := json.Marshal(instance.Spec)
+		if err != nil {
+			llog.Error(err, "解析 JSON 失败")
+			return ctrl.Result{}, err
+		}
+
+		// 更新资源变更次数 r.Status().Update()
+		instance.Status.Count = instance.Status.Count + 1
+		if err := r.Status().Update(ctx, instance); err != nil {
+			llog.Error(err, "更新 cr.Status 失败")
+			return ctrl.Result{}, err
+		}
+
+		// 更新资源实际状态  r.Update()
 		instance.Annotations["spec"] = string(jsonData)
 		if err := r.Update(ctx, instance); err != nil {
 			llog.Error(err, "更新 cr 失败")

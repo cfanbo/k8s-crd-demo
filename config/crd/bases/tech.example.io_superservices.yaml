@@ -256,6 +256,10 @@ spec:
                   - type
                   type: object
                 type: array
+              count:
+                default: 0
+                format: int32
+                type: integer
               observedGeneration:
                 description: The generation observed by the deployment controller.
                 format: int64
@@ -283,6 +287,8 @@ spec:
                   deployment that have the desired template spec.
                 format: int32
                 type: integer
+            required:
+            - count
             type: object
         type: object
     served: true

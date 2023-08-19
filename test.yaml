@@ -3,7 +3,7 @@ kind: SuperService
 metadata:
   name: nginx-app
 spec:
-  size: 2
+  size: 4
   image: nginx:1.23-alpine
   envs:
     - name: yourname

@@ -46,6 +46,7 @@ type SuperServiceStatus struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	appsv1.DeploymentStatus `json:",inline"`
+	Count                   int32 `json:"count"`
 }
 
 //+kubebuilder:object:root=true
